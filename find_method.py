@@ -1,4 +1,30 @@
 import sys
+import csv
+
+def append_method_to_csv(csv_file_path, method_body):
+    with open(csv_file_path, 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        rows = list(reader)
+
+    if not rows:
+        print("CSV is empty, no rows to update.")
+        return
+
+    # Determine the first empty cell in the last row
+    last_row = rows[-1]
+    first_empty_cell_index = next((i for i, x in enumerate(last_row) if not x), len(last_row))
+
+    # Update the last row
+    if first_empty_cell_index < len(last_row):
+        last_row[first_empty_cell_index] = method_body  # Replace the first empty cell
+    else:
+        last_row.append(method_body)  # Append a new cell if all cells are filled
+
+    # Write the modified content back to the CSV
+    with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(rows)
+ 
 
 def find_method_by_line(java_file_path, line_number):
     with open(java_file_path, 'r') as file:
@@ -38,4 +64,7 @@ if __name__ == "__main__":
     input_file = sys.argv[1]
     line_number = int(sys.argv[2])
     method_body = find_method_by_line(input_file, line_number)
-    print(method_body)
+
+    print('AFTER APP')
+    append_method_to_csv('/home/sr53282-admin/Research/Flaky_Test_Repair_Using_LLM/Output.csv', method_body)
+    #print(method_body)
