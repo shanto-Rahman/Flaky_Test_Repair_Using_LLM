@@ -8,6 +8,7 @@ currentDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 inputProj=$currentDir"/projects"
 result="$currentDir/Output.csv"
+
 while read line
 do
     slug=$(echo $line | cut -d, -f1)
@@ -31,12 +32,8 @@ do
 	echo $input_file_cut
     echo $input_file_test
     echo $cut_line_number 
-   	cut_method_body=$(python3 "$currentDir/find_method.py" "$input_file_cut" "$cut_line_number" 2>&1)
-    echo "Method_body=$cut_method_body"
+   	python3 "$currentDir/find_method.py" "$input_file_cut" "$cut_line_number" # 2>&1
 
-   	test_method_body=$(python3 "$currentDir/find_method.py" "$input_file_test" "$test_line_number" 2>&1)
-    echo "test_Method_body=$test_method_body"
-    echo -n ",\"$cut_method_body\"" >> "$result"
-    echo ",\"$test_method_body\"" >> "$result"
-	exit 	
+   	python3 "$currentDir/find_method.py" "$input_file_test" "$test_line_number" #2>&1)
+    echo "" >> $result
 done < $1 #Fix-Result.csv
