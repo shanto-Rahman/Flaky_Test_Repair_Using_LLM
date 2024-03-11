@@ -29,11 +29,13 @@ do
     echo $test_class
     input_file_cut=$(find -name "${cut_class}.java")
     input_file_test=$(find -name "${test_class}.java")
-	echo $input_file_cut
-    echo $input_file_test
-    echo $cut_line_number 
-   	python3 "$currentDir/find_method.py" "$input_file_cut" "$cut_line_number" # 2>&1
+   	python3 "$currentDir/find_method.py" "$input_file_cut" "$cut_line_number"
+   	python3 "$currentDir/find_method.py" "$input_file_test" "$test_line_number"
 
-   	python3 "$currentDir/find_method.py" "$input_file_test" "$test_line_number" #2>&1)
+    #Modified CUT
+   	python3 "$currentDir/find_method.py" "$input_file_cut" "$cut_line_number" $threshold "cut"
+
+    #Modified TestCode
+   	python3 "$currentDir/find_method.py" "$input_file_test" "$test_line_number" $threshold "test_code"
     echo "" >> $result
 done < $1 #Fix-Result.csv
