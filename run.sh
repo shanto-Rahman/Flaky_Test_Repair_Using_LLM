@@ -29,7 +29,13 @@ do
     echo $test_class
     input_file_cut=$(find -name "${cut_class}.java")
     input_file_test=$(find -name "${test_class}.java")
+    if [[ $input_file_cut == "" || $input_file_test == "" ]]; then
+        continue
+    fi
    	python3 "$currentDir/find_method.py" "$input_file_cut" "$cut_line_number"
+    #echo $input_file_cut
+    #echo $cut_line_number
+    #exit
    	python3 "$currentDir/find_method.py" "$input_file_test" "$test_line_number"
 
     #Modified CUT

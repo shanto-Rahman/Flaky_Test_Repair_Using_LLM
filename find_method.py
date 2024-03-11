@@ -123,7 +123,7 @@ if __name__ == "__main__":
         method_body = find_method_by_line(input_file, line_number)
     else:
         threshold = int(sys.argv[3])
-        print(sys.argv)
+        #print(sys.argv)
         code_from = sys.argv[4] #either test code or cut
         #if code_from == "cut":	    
         method_body = find_method_by_line_with_flakesync_changes(input_file, line_number, threshold, code_from) #code_from=cut/ test code
